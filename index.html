@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chartjs - Pie Graph</title>
+    <script type="text/javascript" src = "jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src = "chart.js"></script>
+  </head>
+  <body>
+    <canvas id="mycanvas" width="300" height="300">
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script>
+    $(document).ready(function(){
+      var ctx = $('#mycanvas').get(0).getContext('2d');
+      //pie chart data
+      var data=[{
+    "value": "924991",
+    "label": "JAMMU & KASHMIR",
+    "legend": "JAMMU & KASHMIR",
+    "color": "#EF4718 "
+}, {
+    "value": "1729252",
+    "label": "HIMACHAL PRADESH",
+    "legend": "HIMACHAL PRADESH",
+    "color": "#A45C06 "
+}, {
+    "value": "8860179",
+    "label": "PUNJAB",
+    "legend": "PUNJAB",
+    "color": "#1605D9 "
+}, {
+    "value": "199086",
+    "label": "CHANDIGARH",
+    "legend": "CHANDIGARH",
+    "color": "#DA5294 "
+}, {
+    "value": "1892516",
+    "label": "UTTARAKHAND",
+    "legend": "UTTARAKHAND",
+    "color": "#D69B02 "
+}, {
+    "value": "5113615",
+    "label": "HARYANA",
+    "legend": "HARYANA",
+    "color": "#14BA2B "
+}, {
+    "value": "2812309",
+    "label": "NCT OF DELHI",
+    "legend": "NCT OF DELHI",
+    "color": "#73A41E "
+}, {
+    "value": "12221593",
+    "label": "RAJASTHAN",
+    "legend": "RAJASTHAN",
+    "color": "#751E0B "
+}, {
+    "value": "41357608",
+    "label": "UTTAR PRADESH",
+    "legend": "UTTAR PRADESH",
+    "color": "#8EA5C4 "
+}, {
+    "value": "16567325",
+    "label": "BIHAR",
+    "legend": "BIHAR",
+    "color": "#DF9EE0 "
+}, {
+    "value": "28275",
+    "label": "SIKKIM",
+    "legend": "SIKKIM",
+    "color": "#498F6F "
+}, {
+    "value": "97328",
+    "label": "MANIPUR",
+    "legend": "MANIPUR",
+    "color": "#FD8724 "
+}, {
+    "value": "1218",
+    "label": "MIZORAM",
+    "legend": "MIZORAM",
+    "color": "#F93CED "
+}, {
+    "value": "654918",
+    "label": "TRIPURA",
+    "legend": "TRIPURA",
+    "color": "#C11CAE "
+}, {
+    "value": "17355",
+    "label": "MEGHALAYA",
+    "legend": "MEGHALAYA",
+    "color": "#1E8741 "
+}, {
+    "value": "2231321",
+    "label": "ASSAM",
+    "legend": "ASSAM",
+    "color": "#F9182B "
+}, {
+    "value": "21463270",
+    "label": "WEST BENGAL",
+    "legend": "WEST BENGAL",
+    "color": "#750437 "
+}, {
+    "value": "3985644",
+    "label": "JHARKHAND",
+    "legend": "JHARKHAND",
+    "color": "#6E2EC2 "
+}, {
+    "value": "7188463",
+    "label": "ODISHA",
+    "legend": "ODISHA",
+    "color": "#0BCECE "
+}, {
+    "value": "3274269",
+    "label": "CHHATTISGARH",
+    "legend": "CHHATTISGARH",
+    "color": "#F70CC7 "
+}, {
+    "value": "11342320",
+    "label": "MADHYA PRADESH",
+    "legend": "MADHYA PRADESH",
+    "color": "#CDCAD5 "
+}, {
+    "value": "4074447",
+    "label": "GUJARAT",
+    "legend": "GUJARAT",
+    "color": "#F60295 "
+}, {
+    "value": "6124",
+    "label": "DAMAN & DIU",
+    "legend": "DAMAN & DIU",
+    "color": "#4BD61D "
+}, {
+    "value": "6186",
+    "label": "DADRA & NAGAR HAVELI",
+    "legend": "DADRA & NAGAR HAVELI",
+    "color": "#B06C5B "
+}, {
+    "value": "13275898",
+    "label": "MAHARASHTRA",
+    "legend": "MAHARASHTRA",
+    "color": "#77393B "
+}, {
+    "value": "13878078",
+    "label": "ANDHRA PRADESH",
+    "legend": "ANDHRA PRADESH",
+    "color": "#F06B6D "
+}, {
+    "value": "10474992",
+    "label": "KARNATAKA",
+    "legend": "KARNATAKA",
+    "color": "#7978EF "
+}, {
+    "value": "25449",
+    "label": "GOA",
+    "legend": "GOA",
+    "color": "#A6C8C2 "
+}, {
+    "value": "3039573",
+    "label": "KERALA",
+    "legend": "KERALA",
+    "color": "#D71C9B "
+}, {
+    "value": "14438445",
+    "label": "TAMIL NADU",
+    "legend": "TAMIL NADU",
+    "color": "#F517A8 "
+}, {
+    "value": "196325",
+    "label": "PUDUCHERRY",
+    "legend": "PUDUCHERRY",
+    "color": "#8E31DC "
+}];
+        var piechart = new Chart(ctx,{
+        options : {animation :{animationScale : true}}
+      }).Doughnut(data);
+    });
+    </script>
+  </body>
+</html>
