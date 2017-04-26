@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+
+  <title>Parking App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=0">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css" media="screen  ">
+
+  <link rel="stylesheet" href="/stylesheets/angular-material.min.css">
+  <link rel="stylesheet" href="/stylesheets/fonts.css">
+  <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/sweetalert.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+
+
+</head>
+<body ng-app="appRoute">
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <div ui-view="header"></div>
+  <div ui-view="content"></div>
+  <script src="/angular/angular.min.js"></script>
+  <script src="/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/angular-animate.min.js"></script>
+  <script src="/js/angular-aria.min.js"></script>
+  <script src="/js/angular-messages.min.js"></script>
+  <script src="/js/angular-route.min.js"></script>
+  <!-- Angular Material Library -->
+  <script src="/js/angular-material.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+  <!-- jquery libraries -->
+  <script src="/js/jquery-1.9.1.js"></script>
+  <script src="/js/jquery-ui.js"></script>
+
+
+  <!-- Bar Graph Library -->
+  <script type="text/javascript" src="/js/loader.js"></script>
+  <!-- Sweetalert library-->
+  <script src="/js/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- <script src="/js/jk-carousel.min.js"></script> -->
+
+  <!-- <link rel="stylesheet" href="/stylesheets/jk-carousel.min.css" /> -->
+
+  <script src="/angular-routes/routing.js"></script>
+  <script src="/controllers/loginController.js"></script>
+  <script src="/controllers/logoutController.js"></script>
+  <script src="/controllers/bookingDetailsCntlr.js"></script>
+  <script src="/controllers/adminController.js"></script>
+  <script src="/services/mainService.js"></script>
+  <script src="/services/authservice.js"></script>
+</body>
+</html>
