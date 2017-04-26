@@ -1,0 +1,18 @@
+<div ng-controller="loginController"  class="md-padding" ng-cloak="">
+  <form>
+    <div class="group" ng-if="errorMessage" layout-align="center center" style="color:red"><center><b>{{ errorMessage }}</b></center></div>
+    <div class="group" layout="row" layout-align="center center"><img src="../images/user1.png"></img></div>
+    <div class="group">
+      <input type="text" name="eMail" ng-model="form1.eMail"  required><span class="highlight"></span><span class="bar"></span>
+      <label>Email Id</label>
+    </div>
+    <div class="group">
+      <input type="password" name="password" ng-model="form1.password" required><span class="highlight"></span><span class="bar"></span>
+      <label>Password</label>
+    </div>
+    <div layout="row" layout-align="center center">
+      <button type="submit" class="button" ng-click="login(form1)">Login</button>
+      <button type="submit" class="button" ui-sref="registerUser">Sign up</button>
+    </div>
+  </form>
+</div>

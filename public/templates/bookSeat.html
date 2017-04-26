@@ -1,0 +1,86 @@
+<div ng-app="appRoute"  ng-app="appRoute" ng-controller="loginController as ctrl" layout-fill layout="column" layout-align="center">
+
+  <div layout="row" layout-align="center">
+  <md-card class="bCard">
+    <md-card-title>
+      <md-card-title-text>
+        Hi&nbsp;<span class="md-md-subhead lUser" > <b>{{currentUser + ","}} </b></span>
+      </md-card-title-text>
+    </md-card-title>
+    
+    <md-card-content>
+      <div layout="row" layout-align="center center">
+        <table id="table" class="dCard">
+          <tbody>
+          <tr>
+            <td>
+              <div layout="row" layout-align="center center">
+                <img src="../images/area.png"></img>
+                  <md-input-container>
+                <md-select placeholder="Location" ng-model="bType" md-on-open="loadbTypes()" style="min-width: 200px;">
+                  <md-option ng-value="Location" ng-repeat="Location in bTypes">{{Location.name}}</md-option>
+                </md-select>
+              </md-input-container>
+              </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div layout="row" layout-align="center center">
+                  <img src="../images/floor.png"></img>
+                  <md-input-container>
+                    <md-select placeholder="Select Floor" ng-model="bType.Floor" md-on-open="loadFloors()" style="min-width: 200px;">
+                      <md-option ng-value="Floor" ng-repeat="Floor in Floors">{{Floor.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div layout="row" class="dpInpCtnr" layout-align="center center">
+                  <img src="../images/calendar.png" ng-model="bType.BookingDate"></img>
+                  <md-datepicker md-date-filter="ctrl.onlyWeekendsPredicate" md-hide-icons="calendar" md-placeholder="Select Date" ng-model="bType.BookingDate"></md-datepicker>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div layout="row" layout-align="center center">
+                  <img src="../images/clock.png"></img>
+                  <md-input-container>
+                    <md-select placeholder="Start Time" ng-model="bType.StartTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                      <md-option ng-value="sTime" ng-repeat="sTime in Times">{{sTime.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div layout="row" layout-align="center center">
+                  <img src="../images/clock.png"></img>
+                  <md-input-container>
+                    <md-select placeholder="End Time" ng-model="bType.EndTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                      <md-option ng-value="EndTime" ng-repeat="EndTime in Times">{{EndTime.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+          </table>
+      </div>
+
+      <div layout="row" layout-align="center center">
+        <button type="submit" class="button" ng-click="bookTheSeat(bType)">Book Now</button>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>
+</div>

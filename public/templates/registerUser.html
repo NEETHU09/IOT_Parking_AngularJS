@@ -1,0 +1,27 @@
+<div ng-controller="loginController" id="popupContainer" class="md-padding dialogPopup" ng-cloak="">
+  <form >
+    <div class="group" ng-if="errorMessage" layout-align="center center" style="color:red;font"><center><b>{{ errorMessage }}</b></center></div>
+    <!-- <div class="group" ng-if="passwordMismatch" layout-align="center center" style="color:red">{{ passwordMismatch }}</div> -->
+    <div class="group">
+      <input type="text" name="userName" ng-model="form.userName" required><span class="highlight"></span><span class="bar"></span>
+      <label>Name</label>
+    </div>
+    <div class="group">
+      <input type="email" name="eMail" ng-model="form.eMail" required><span class="highlight"></span><span class="bar"></span>
+      <label>Email</label>
+    </div>
+    <div class="group">
+      <input type="password" name="password" ng-model="form.password" required><span class="highlight"></span><span class="bar"></span>
+      <label>Password</label>
+    </div>
+    <div class="group">
+      <input type="password" name="retypPassword" ng-model="form.retypPassword" required><span class="highlight"></span><span class="bar"></span>
+      <label>Confirm Password</label>
+    </div>
+    <div  layout="row" layout-wrap="" layout-margin="" layout-align="center">
+      <button class="button buttonBlue" ng-click="registerNewUser(form)">
+        Register
+      </button>
+    </div>
+  </form>
+</div>

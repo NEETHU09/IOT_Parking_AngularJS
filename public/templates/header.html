@@ -1,0 +1,16 @@
+<div class="header" ng-controller="loginController">
+  <div class="logo">
+    <img src="./images/logo1.png"></img>
+  </div>
+  <div class="eChairIcon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+      <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H15V3H9v2H6.5c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+    </svg>
+  </div>
+  <div class="hName" ng-show="{{ ShowBookSeat}}">Parking App</div>
+  <div class="hName" ng-show="{{HideBookSeat}}"><a ui-sref="bookSeat({'param1':true,param2:true})">Parking App</a></div>
+  <div class="hRight">
+    <button class="bDetailsBtn" ng-click="showBookingDetails()" ng-show="{{ logValBD }}">Booking Details<md-tooltip md-direction="bottom">Booking Details</md-tooltip></button>
+    <button class="logoutBtn" style="vertical-align:middle" ui-sref="logout" ng-show="{{ logValLO }}"><span>Logout </span><md-tooltip md-direction="bottom">Logout</md-tooltip></button>
+  </div>
+</div>

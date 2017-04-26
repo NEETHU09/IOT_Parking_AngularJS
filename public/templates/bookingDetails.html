@@ -1,0 +1,79 @@
+<div  ng-controller="bookingDetailsCntlr as ctrl" class ="md-padding bDetailsMain" ng-cloak="">
+  <h4 layout-fill layout="column" layout-align="center">Booking List  </h4>
+  <div ng-if="len">
+    <h3>You have not booked any seat/room</h3>
+  </div>
+  <div ng-if="len !=0" layout="row">
+
+    <div flex="1" style="padding-top:6%" ng-if="showLeftRightArrow">
+      <img src="../images/left-arrow2.png" ng-click="prevPage()" ></img>
+    </div>
+
+    <div flex="95" class="bCards">
+    <div  class="bDetailsCard" class="col-lg-10" layout="row" ng-repeat="bookings in bookingDetails | startFrom:currentPageBooking | limitTo:pageSize">
+      <md-card >
+        <table class="dCard">
+          <tbody>
+            <tr>
+              <th>
+                Location:
+              </th>
+              <td>
+                {{bookings.Location}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Floor:
+              </th>
+              <td>
+                {{bookings.Floor}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Parking Slot No:
+              </th>
+              <td>
+                {{bookings.SeatNumber}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Date:
+              </th>
+              <td>
+                {{bookings.BookingDate}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Time:
+              </th>
+              <td>
+                {{bookings.StartTime}} - {{bookings.EndTime}}
+              </td>
+            </tr>
+            <tr ng-if=" bookings.Room != '' ">
+              <th>
+                &nbsp;
+              </th>
+              <td>
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" align="right">
+                <button ng-click="deleteReservation(bookings)" class="canBtn"><img src="../images/cancel.png"></img></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </md-card>
+    </div>
+    </div>
+    <div flex="2" class="rightArrow" ng-if="showLeftRightArrow">
+      <img src="../images/right-black-arrow.png" ng-click="nextPage()" ></img>
+    </div>
+  </div>

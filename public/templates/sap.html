@@ -1,0 +1,1219 @@
+<div ng-app="appRoute" id="popupContainer" ng-app="appRoute" ng-controller="loginController as ctrl" layout-fill layout="column" layout-align="center">
+  <div flex="50" layout="row" layout-align="center">
+  <md-card class="bCard">
+    <md-card-title>
+      <md-card-title-text>
+        Hi&nbsp;<span class="md-md-subhead lUser" > {{currentUser + ","}} </span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <div layout="row" layout-align="center center">
+        <md-select placeholder="Type of Booking" ng-model="bType" md-on-open="loadbTypes()" style="min-width: 200px;">
+          <md-option ng-value="bType" ng-repeat="bType in bTypes">{{bType.name}}</md-option>
+        </md-select>
+      </div>
+      <!-- Desk Booking dropdownlist code -->
+        <div ng-if="bType.name == 'Desk Booking'">
+          <table id="table" class="table">
+            <tbody>
+              <tr>
+                <td>
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/area.png"></img>
+                    <md-input-container>
+                      <!-- <label>Select Area</label> -->
+                      <md-select placeholder="Select Area" ng-model="booking.Area" md-on-open="loadAreas()" style="min-width: 200px;">
+                        <md-option ng-value="Area" ng-repeat="Area in Areas">{{Area.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+                <td>
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/calendar.png"></img>
+                    <!-- <md-input-container> -->
+                      <!-- <label>Select Date</label> -->
+                      <!-- <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date"></md-datepicker> -->
+                      <!-- <input type="text" vale="Select Date" ng-model="booking.BookingDate" id="datepicker" datepicker></input> -->
+                      <md-datepicker md-date-filter="ctrl.onlyWeekendsPredicate" ng-model="booking.BookingDate" md-hide-icons="calendar" md-placeholder="Select Date" ng-model="booking.BookingDate"></md-datepicker>
+                    <!-- </md-input-container> -->
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <!-- Tower dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/tower.png"></img>
+                    <md-input-container>
+                      <!-- <label>Select Tower</label> -->
+                      <md-select placeholder="Select Tower" ng-model="booking.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+                <td>
+
+                  <!-- Start Time dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/clock.png"></img>
+                    <md-input-container>
+                      <!-- <label>Start Time</label> -->
+                      <md-select placeholder="Start Time" ng-model="booking.StartTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                        <md-option ng-value="sTime" ng-repeat="sTime in Times">{{sTime.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <!-- Floor dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/floor.png"></img>
+                    <md-input-container>
+                      <!-- <label>Select Floor</label> -->
+                      <md-select placeholder="Select Floor" ng-model="booking.Floor" md-on-open="loadFloors()" style="min-width: 200px;">
+                        <md-option ng-value="Floor" ng-repeat="Floor in Floors">{{Floor.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+                <td>
+
+                  <!-- End Time dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/clock.png"></img>
+                    <md-input-container>
+                      <!-- <label>End Time</label> -->
+                      <md-select placeholder="End Time" ng-model="booking.EndTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                        <md-option ng-value="EndTime" ng-repeat="EndTime in Times">{{EndTime.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <!-- Wing dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/wing.png"></img>
+                    <md-input-container>
+                      <!-- <label>Select Wing</label> -->
+                      <md-select placeholder="Select Wing" ng-model="booking.Wing" md-on-open="loadWings()" style="min-width: 200px;">
+                        <md-option ng-value="Wing" ng-repeat="Wing in Wings">{{Wing.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+                <td>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <!-- Zone dropdownlist code -->
+                  <div layout="row" layout-align="center center">
+                    <img src="../images/zone_room.png"></img>
+                    <md-input-container>
+                      <!-- <label>Select Zone</label> -->
+                      <md-select placeholder="Select Zone" ng-model="booking.Zone" md-on-open="loadZones()" style="min-width: 200px;">
+                        <md-option ng-value="Zone" ng-repeat="Zone in Zones">{{Zone.name}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div layout="row" class="dialog-demo-content" layout-align="center center">
+            <button class="button buttonBlue" ng-click="bookTheSeat(booking,'Desk Booking')">Book Now</button>
+          </div>
+        </div>
+
+        <!-- Desk Booking dropdownlist code -->
+      <div ng-if="bType.name == 'Room Booking'">
+        <table id="table" class="table">
+          <tbody>
+            <tr>
+              <td>
+                <div layout="row" layout-align="center center">
+                  <img src="../images/area.png"></img>
+                  <md-input-container>
+                    <!-- <label>Select Area</label> -->
+                    <md-select placeholder="Select Area" ng-model="booking.Area" md-on-open="loadAreas()" style="min-width: 200px;">
+                      <md-option ng-value="Area" ng-repeat="Area in Areas">{{Area.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+              <td>
+                <div layout="row" layout-align="center center">
+                  <img src="../images/calendar.png"></img>
+                  <!-- <md-input-container> -->
+                    <!-- <label>Select Date</label> -->
+                    <md-datepicker md-placeholder="Select Date" ng-model="booking.BookingDate" md-date-filter="ctrl.onlyWeekendsPredicate" md-hide-icons="calendar"></md-datepicker>
+                    <!-- <input type="text" vale="Select Date" ng-model="booking.BookingDate" datepicker ></input> -->
+                  <!-- </md-input-container> -->
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <!-- Tower dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/tower.png"></img>
+                  <md-input-container>
+                    <!-- <label>Select Tower</label> -->
+                    <md-select placeholder="Select Tower" ng-model="booking.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                      <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+              <td>
+
+                <!-- Start Time dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/clock.png"></img>
+                  <md-input-container>
+                    <!-- <label>Start Time</label> -->
+                    <md-select placeholder="Start Time" ng-model="booking.StartTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                      <md-option ng-value="sTime" ng-repeat="sTime in Times">{{sTime.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <!-- Floor dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/floor.png"></img>
+                  <md-input-container>
+                    <!-- <label>Select Floor</label> -->
+                    <md-select placeholder="Select Floor" ng-model="booking.Floor" md-on-open="loadFloors()" style="min-width: 200px;">
+                      <md-option ng-value="Floor" ng-repeat="Floor in Floors">{{Floor.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+              <td>
+
+                <!-- End Time dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/clock.png"></img>
+                  <md-input-container>
+                    <!-- <label>End Time</label> -->
+                    <md-select placeholder="End Time" ng-model="booking.EndTime" md-on-open="loadTimes()" style="min-width: 200px;">
+                      <md-option ng-value="EndTime" ng-repeat="EndTime in Times">{{EndTime.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <!-- Wing dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/wing.png"></img>
+                  <md-input-container>
+                    <!-- <label>Select Wing</label> -->
+                    <md-select placeholder="Select Wing" ng-model="booking.Wing" md-on-open="loadWings()" style="min-width: 200px;">
+                      <md-option ng-value="Wing" ng-repeat="Wing in Wings">{{Wing.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <!-- Zone dropdownlist code -->
+                <div layout="row" layout-align="center center">
+                  <img src="../images/zone_room.png"></img>
+                  <md-input-container>
+                    <!-- <label>Select Room</label> -->
+                    <md-select placeholder="Select Room" ng-model="booking.Room" md-on-open="loadRooms()" style="min-width: 200px;">
+                      <md-option ng-value="Room" ng-repeat="Room in Rooms">{{Room.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div layout="row" class="dialog-demo-content" layout-align="center center">
+          <button class="button buttonBlue" ng-click="bookTheSeat(booking,'Room Booking')">Book Now</button>
+        </div>
+      </div>
+
+    </md-card-content>
+  </md-card>
+</div>
+</div>
+
+
+
+<table>
+  <tbody >
+  <div layout="row" >
+      <!-- <div ng-bind="bookings.Area"></div> -->
+      <tr ng-repeat="bookings in AllbookingDetails"  ng-if=" Area.name == 'Fareham' && bookings.Area == 'Fareham' && bookings.Floor == 'Ground Floor'">
+        <td>
+          Sales
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr ng-repeat="bookings in AllbookingDetails"  ng-if="bookings.Zone == 'HR' && Area.name == 'Fareham' && bookings.Area == 'Fareham' && bookings.Floor == 'Ground Floor'">
+        <td>
+          HR
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr ng-repeat="bookings in AllbookingDetails"  ng-if="bookings.Zone == 'Finance' && Area.name == 'Fareham' && bookings.Area == 'Fareham' && bookings.Floor == 'Ground Floor'">
+        <td>
+          Finance
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr ng-repeat="bookings in AllbookingDetails"  ng-if="bookings.Zone == 'Operations' && Area.name == 'Fareham' && bookings.Area == 'Fareham' && bookings.Floor == 'Ground Floor'">
+        <td>
+          Operations
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr ng-repeat="bookings in AllbookingDetails"  ng-if="Area.name == 'Fareham' && bookings.Area == 'Fareham' && bookings.Floor == 'Ground Floor'">
+        <td>
+          Delivery
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+    <div ng-if="Area.name == 'Swindon' && bookings.Area == 'Swindon'">
+      <!-- <div ng-bind="bookings.Area"></div> -->
+      <tr>
+        <td>
+          Sales
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          HR
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Finance
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Operations
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Delivery
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+    </div>
+    <div ng-if="Area.name == 'Cheltenham' && bookings.Area == 'Cheltenham'">
+      <!-- <div ng-bind="bookings.Area"></div> -->
+      <tr>
+        <td>
+          Sales
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'S-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'S-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          HR
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'H-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'H-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Finance
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'F-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'F-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Operations
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'O-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'O-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Delivery
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-00'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-00'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-01'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-01'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-02'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-02'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-03'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-03'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+        <td>
+          <div ng-if="bookings.SeatNumber == 'D-04'"><img src="../images/seat.png" style="background-color:red;"></img></div>
+          <div ng-if="bookings.SeatNumber != 'D-04'"><img src="../images/seat.png" style="background-color:green;"></img></div>
+        </td>
+      </tr>
+    </div>
+  </div>
+  </tbody>
+
+</table>
+
+
+
+
+
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="../images/1.png" height="300">
+
+    </div>
+
+    <div class="item">
+      <img src="../images/2.png" height="300">
+    </div>
+
+    <div class="item">
+      <img src="../images/3.png" height="300">
+    </div>
+
+    <div class="item">
+      <img src="../images/4.png" height="300">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+
+
+  <md-tab label="Fareham">
+    <div layout="row" layout-align="center center">
+      <img src="../images/tower.png"></img>
+      <md-input-container>
+        <!-- <label>Select Tower</label> -->
+        <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+          <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+  <div style="padding: 25px; text-align: center;" ng-if=(bType.Tower)>
+    <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bType.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+    <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bType.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+    <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bType.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+  </div>
+  <center><div id="chart_divDesk"></div></center>
+</md-tab>
+<md-tab label="Swindon">
+  <div layout="row" layout-align="center center">
+    <img src="../images/tower.png"></img>
+    <md-input-container>
+      <!-- <label>Select Tower</label> -->
+      <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+      </md-select>
+    </md-input-container>
+  </div>
+<div style="padding: 25px; text-align: center;" ng-if=(bType.Tower)>
+  <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bType.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+  <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bType.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+  <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bType.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+</div>
+<center><div id="chart_divDesk"></div></center>
+</md-tab>
+<md-tab label="Cheltenham">
+<div layout="row" layout-align="center center">
+  <img src="../images/tower.png"></img>
+  <md-input-container>
+    <!-- <label>Select Tower</label> -->
+    <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+      <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+    </md-select>
+  </md-input-container>
+</div>
+<div style="padding: 25px; text-align: center;" ng-if=(bType.Tower)>
+<button class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bType.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+<button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bType.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+<button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bType.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+</div>
+<center><div id="chart_divDesk"></div></center>
+</md-tab>
+
+
+
+<md-tab label="Fareham">
+  <div layout="row" layout-align="center center">
+    <img src="../images/tower.png"></img>
+    <md-input-container>
+      <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+      </md-select>
+    </md-input-container>
+  </div>
+  <div style="padding: 25px; text-align: center;" ng-if="bType.Tower">
+    <button class="seaterBtn" ng-click="fetchBookings('Room Booking','Fareham',bType.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+    <button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Fareham',bType.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+  </div>
+  <center><div id="chart_divRoom"></div></center>
+</md-tab>
+<md-tab label="Swindon">
+<div layout="row" layout-align="center center">
+  <img src="../images/tower.png"></img>
+  <md-input-container>
+    <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+      <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+    </md-select>
+  </md-input-container>
+</div>
+<div style="padding: 25px; text-align: center;" ng-if="bType.Tower">
+  <button class="seaterBtn" ng-click="fetchBookings('Room Booking','Swindon',bType.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+  <button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Swindon',bType.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+</div>
+<center><div id="chart_divRoom"></div></center>
+</md-tab>
+<md-tab label="Cheltenham">
+<div layout="row" layout-align="center center">
+<img src="../images/tower.png"></img>
+<md-input-container>
+  <md-select placeholder="Select Tower" ng-model="bType.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+    <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+  </md-select>
+</md-input-container>
+</div>
+<div style="padding: 25px; text-align: center;" ng-if="bType.Tower">
+<button class="seaterBtn" ng-click="fetchBookings('Room Booking','Cheltenham',bType.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+<button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Cheltenham',bType.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+</div>
+<center><div id="chart_divRoom"></div></center>
+</md-tab>
+
+
+/*2nd Method*/
+<md-tab ng-repeat="Area in Areas" label="{{Area.name}}">
+                    <div layout="row" layout-align="center center">
+                      <img src="../images/tower.png"></img>
+                      <md-input-container>
+                        <!-- <label>Select Tower</label> -->
+                        <md-select placeholder="Select Tower" ng-model="bType"+"{{Area.name}}"+".Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                          <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                        </md-select>
+                      </md-input-container>
+                    </div>
+                    <p></p>
+                  <div style="padding: 25px; text-align: center;" ng-if="bType"+"{{Area.name}}"+".Tower">
+                    <button class="floorBtn" ng-click="fetchBookings('Desk Booking',Area,'bType'+'{{Area.name}}'+'.Tower','Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                    <button  class="floorBtn" ng-click="fetchBookings('Desk Booking',Area,'bType'+'{{Area.name}}'+'.Tower','1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                    <button  class="floorBtn" ng-click="fetchBookings('Desk Booking',Area,'bType'+'{{Area.name}}'+'.Tower','2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                  </div>
+                  <div id="chart_divDesk"><center><div id="chart_divDesk{{Area.name}}"></div></center></div>
+                </md-tab>
+
+
+
+
+
+
+
+                <h4 layout-fill layout="column" layout-align="center">Booking List  </h4>
+                <div ng-if="len">
+                  <h3>You have not booked any seat/room</h3>
+                </div>
+                <div ng-if="len !=0" layout="row">
+
+                  <div flex="15" style="padding-top:6%">
+                    <img src="../images/left-arrow2.png" ng-click="prevPage()" ></img>
+                    <!-- <button class="perivousBtn" ng-click="prevPage()">previous</button> -->
+                  </div>
+                  <div  flex="70"class="bDetailsCard"  layout="row" ng-repeat="bookings in bookingDetails | startFrom:currentPageBooking | limitTo:pageSize">
+                    <md-card >
+                      <table class="dCard">
+                        <tbody>
+                          <tr>
+                            <th>
+                              Location:
+                            </th>
+                            <td>
+                              <p>{{bookings.Area}}, {{bookings.Tower}}, {{bookings.Floor}}, {{bookings.Wing}}
+                                <!-- <span ng-if=" bookings.Zone != '' ">{{bookings.Zone}},</span> -->
+                              </p>
+                            </td>
+                          </tr>
+                          <tr ng-if=" bookings.Zone != ''">
+                            <th>
+                              Zone:
+                            </th>
+                            <td>
+                              {{bookings.Zone}}
+                            </td>
+                          </tr>
+                          <tr ng-if=" bookings.Zone != ''">
+                            <th>
+                              Seat:
+                            </th>
+                            <td>
+                              {{bookings.SeatNumber}}
+                            </td>
+                          </tr>
+                          <tr ng-if=" bookings.Room != '' ">
+                            <th>
+                              Room:
+                            </th>
+                            <td>
+                              {{bookings.Room}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              Date:
+                            </th>
+                            <td>
+                              {{bookings.BookingDate}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>
+                              Time:
+                            </th>
+                            <td>
+                              {{bookings.StartTime}} - {{bookings.EndTime}}
+                            </td>
+                          </tr>
+                          <tr ng-if=" bookings.Room != '' ">
+                            <th>
+                              &nbsp;
+                            </th>
+                            <td>
+                              &nbsp;
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" align="right">
+                              <!-- <button  ng-click="deleteReservation(bookings)"><img src="../images/cancel.png"></img></button> -->
+                              <button ng-click="deleteReservation(bookings)" class="canBtn"><img src="../images/cancel.png"></img></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </md-card>
+                  </div>
+                  <div flex="15" style="padding-top:6%">
+                    <img src="../images/right-black-arrow.png" ng-click="nextPage()" ></img>
+                  </div>
+                </div>
+
+                <div layout="row" layout-sm="column" layout-xs="column">
+                  <div flex="33">
+                    <md-card class="newsFeedCard">
+                      <md-card-title>
+                        <md-card-title-text>
+                          <md-toolbar class="md-primary md-hue-2" ><div class="md-toolbar-tools"><h2 class="md-flex" >Latest News</h2></div></md-toolbar>
+                        </md-card-title-text>
+                      </md-card-title>
+                      <md-card-content>
+                        <md-list >
+                          <md-list-item class="md-3-line" ng-repeat="news in newsfeed" ng-click="null">
+                            <div class="md-list-item-text" layout="column">
+                              <h3>{{ news.date }}</h3>
+                              <p>{{ news.content }}</p>
+                            </div>
+                          </md-list-item>
+                        </md-list>
+
+                      </md-card-content>
+                    </md-card>
+                  </div>
+                  <div flex>
+                    <!-- <div class="imageslide" ng-switch='slideshow' ng-animate="'animate'">
+                    <div class="slider-content" ng-switch-when="1">
+                      <img src="../images/1.png" height="300">
+                    </div>
+                    <div class="slider-content" ng-switch-when="2">
+                      <img src="../images/2.png" height="300">
+                    </div>
+                    <div class="slider-content" ng-switch-when="3">
+                      <img src="../images/3.png" height="300">
+                    </div>
+                    <div class="slider-content" ng-switch-when="4">
+                      <img src="../images/4.png" height="300">
+                    </div>
+                    <div class="slider-content" ng-switch-when="4">
+                      <img src="../images/5.png" height="300">
+                    </div>
+                  </div> -->
+                  <jk-carousel
+                      data="dataArray"
+                      item-template-url="'slider-template.html'"
+                      max-width="800"
+                      max-height="500"
+                      auto-slide="true"
+                      auto-slide-time="2000" >
+                      </jk-carousel>
+                  </div>
+                </div>
+
+
+                <div flex="33">
+                  <md-card class="newsFeedCard">
+                    <md-card-title>
+                      <md-card-title-text>
+                        <md-toolbar class="md-primary md-hue-2" ><div class="md-toolbar-tools"><h2 class="md-flex" >Latest News</h2></div></md-toolbar>
+                      </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                      <md-list >
+                        <md-list-item class="md-3-line" ng-repeat="news in newsfeed" ng-click="null">
+                          <div class="md-list-item-text" layout="column">
+                            <h3>{{ news.date }}</h3>
+                            <p>{{ news.content }}</p>
+                          </div>
+                        </md-list-item>
+                      </md-list>
+
+                    </md-card-content>
+                  </md-card>
+                </div>
+                <div flex>
+                  <!-- <div class="imageslide" ng-switch='slideshow' ng-animate="'animate'">
+                  <div class="slider-content" ng-switch-when="1">
+                    <img src="../images/1.png" height="300">
+                  </div>
+                  <div class="slider-content" ng-switch-when="2">
+                    <img src="../images/2.png" height="300">
+                  </div>
+                  <div class="slider-content" ng-switch-when="3">
+                    <img src="../images/3.png" height="300">
+                  </div>
+                  <div class="slider-content" ng-switch-when="4">
+                    <img src="../images/4.png" height="300">
+                  </div>
+                  <div class="slider-content" ng-switch-when="4">
+                    <img src="../images/5.png" height="300">
+                  </div>
+                </div> -->
+                </div>
+
+
+
+
+
+
+
+                <div ng-app="appRoute"  ng-controller="adminController as ctrl" layout-fill layout="column" layout-align="center">
+                  <div layout="row" layout-align="center">
+                <md-card class="adminMainCard">
+                  <div layout="row" layout-sm="column" layout-xs="column">
+                    <div flex>
+                      <md-card >
+                        <md-card-title>
+                          <md-card-title-text>
+                            <div><h3 class="md-flex" >Desk Occupancy</h3></div>
+                          </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content>
+                          <div ng-cloak>
+                            <md-content class="deskBookingCard" ng-init="bookingType = 'Desk Booking'">
+                                <md-tabs md-border-bottom md-autoselect>
+
+                                <md-tab label="Fareham">
+                                  <div layout="row" layout-align="center center">
+                                    <img src="../images/tower.png"></img>
+                                    <md-input-container>
+                                      <md-select placeholder="Select Tower" ng-model="bTypeD1.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                      </md-select>
+                                    </md-input-container>
+                                  </div>
+                                  <div style="padding: 25px; text-align: center;" ng-if="bTypeD1.Tower">
+                                   <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                                   <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                                   <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                                 </div>
+                                <center><div id="chart_divDesk" ><div id="chart_divDeskFareham"></div></div></center>
+                                <div style="float:right;">
+                                  <md-button class="md-fab" aria-label="Use Android" ng-click="ShowAnalytics(bookingType)" ng-show="disableSABtn">
+                                    <img src="../images/increasing-stocks-graphic-of-bars.png"></img>
+                                    <md-tooltip md-direction="bottom">Trend Analysis</md-tooltip>
+                                  </md-button>
+                                </div>
+                                <center><div id="ShowAnalyticsGraph"></div></center>
+                                </md-tab>
+                                <md-tab label="Swindon">
+                                <div layout="row" layout-align="center center">
+                                  <img src="../images/tower.png"></img>
+                                  <md-input-container>
+                                    <md-select placeholder="Select Tower" ng-model="bTypeD2.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                      <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                    </md-select>
+                                  </md-input-container>
+                                </div>
+                                <div style="padding: 25px; text-align: center;" ng-if="bTypeD2.Tower">
+                                 <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                                 <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                                 <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                               </div>
+                                <center><div id="chart_divDesk"><div id="chart_divDeskSwindon"></div><div><button ng-click="ShowAnalytics (bookingType)">showgraph</button></div></div></center>
+                                </md-tab>
+                                <md-tab label="Cheltenham">
+                                <div layout="row" layout-align="center center">
+                                <img src="../images/tower.png"></img>
+                                <md-input-container>
+                                  <md-select placeholder="Select Tower" ng-model="bTypeD3.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                    <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                  </md-select>
+                                </md-input-container>
+                                </div>
+                                <div style="padding: 25px; text-align: center;" ng-if="bTypeD3.Tower">
+                                 <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                                 <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'1st Floor')">1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                                 <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'2nd Floor')">2F<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                               </div>
+                                <center><div id="chart_divDesk"><div id="chart_divDeskCheltenham"></div><div><button ng-click="ShowAnalytics(bookingType)">Showgraph</button></div></div></center>
+                                </md-tab>
+                              </md-tabs>
+
+                            </md-content>
+                          </div>
+                        </md-card-content>
+                      </md-card>
+                    </div>
+
+                    <div flex>
+                      <md-card >
+                        <md-card-title>
+                          <md-card-title-text>
+                            <div><h3 class="md-flex" >Room Occupancy</h3></div>
+                          </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content>
+                          <div ng-cloak>
+                            <md-content class="roomBookingCard">
+                              <md-tabs md-border-bottom md-autoselect >
+                                <md-tab label="Fareham">
+                                  <div layout="row" layout-align="center center">
+                                    <img src="../images/tower.png"></img>
+                                    <md-input-container>
+                                      <md-select placeholder="Select Tower" ng-model="bTypeR1.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                      </md-select>
+                                    </md-input-container>
+                                  </div>
+                                  <div style="padding: 25px; text-align: center;" ng-if="bTypeR1.Tower">
+                                    <button class="seaterBtn" ng-click="fetchBookings('Room Booking','Fareham',bTypeR1.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+                                    <button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Fareham',bTypeR1.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+                                  </div>
+                                  <center><div id="chart_divRoom"><div id="chart_divRoomFareham"></div></div></center>
+                                </md-tab>
+                                <md-tab label="Swindon">
+                                <div layout="row" layout-align="center center">
+                                  <img src="../images/tower.png"></img>
+                                  <md-input-container>
+                                    <md-select placeholder="Select Tower" ng-model="bTypeR2.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                      <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                    </md-select>
+                                  </md-input-container>
+                                </div>
+                                <div style="padding: 25px; text-align: center;" ng-if="bTypeR2.Tower">
+                                  <button class="seaterBtn" ng-click="fetchBookings('Room Booking','Swindon',bTypeR2.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+                                  <button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Swindon',bTypeR2.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+                                </div>
+                                <center><div id="chart_divRoom"><div id="chart_divRoomSwindon"></div></div></center>
+                                </md-tab>
+                                <md-tab label="Cheltenham">
+                                <div layout="row" layout-align="center center">
+                                <img src="../images/tower.png"></img>
+                                <md-input-container>
+                                  <md-select placeholder="Select Tower" ng-model="bTypeR3.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
+                                    <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
+                                  </md-select>
+                                </md-input-container>
+                                </div>
+                                <div style="padding: 25px; text-align: center;" ng-if="bTypeR3.Tower">
+                                <button class="seaterBtn" ng-click="fetchBookings('Room Booking','Cheltenham',bTypeR3.Tower,'4 - Seater')">4S<md-tooltip md-direction="bottom">4 - Seater</md-tooltip></button>
+                                <button  class="seaterBtn" ng-click="fetchBookings('Room Booking','Cheltenham',bTypeR3.Tower,'8 - Seater')">8S<md-tooltip md-direction="bottom">8 - Seater</md-tooltip></button>
+                                </div>
+                                <center><div id="chart_divRoom"><div id="chart_divRoomCheltenham"></div></div></center>
+                                </md-tab>
+                            </md-tabs>
+                            </md-content>
+                          </div>
+                        </md-card-content>
+                      </md-card>
+                    </div>
+                  </div>
+
+                </md-card>
+                </div>
+
+                </div>
+
+
+
+
+
+                <!-- if(len <= 10){
+                  ticksArray = [0,1,2,3,4,5];
+                }else if(len <= 20){
+                  ticksArray = [0,4,8,12,16,20];
+                }else if(len <= 30){
+                  ticksArray = [0,6,12,18,24,30];
+                }else if(len <= 40){
+                  ticksArray = [0,8,16,24,32,40];
+                }else if(len <= 50){
+                  ticksArray = [0,10,20,30,40,50];
+                }else if(len <= 60){
+                  ticksArray = [0,12,24,36,48,60];
+                }else if(len <= 70){
+                  ticksArray = [0,14,28,42,56,70];
+                }else if(len <= 80){
+                  ticksArray = [0,16,32,48,64,80];
+                }else if(len <= 90){
+                  ticksArray = [0,18,36,54,72,90];
+                }else if(len <= 100){
+                  ticksArray = [0,20,40,60,80,100];
+                }else if(len <= 110){
+                  ticksArray = [0,22,44,66,88,110];
+                }else if(len <= 120){
+                  ticksArray = [0,24,48,72,96,120];
+                }
+                else if(len <= 130){
+                  ticksArray = [0,26,52,78,104,130];
+                }else{
+                  ticksArray = [0,40,80,120,160,200];
+                } -->
