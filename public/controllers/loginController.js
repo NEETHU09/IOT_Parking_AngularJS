@@ -116,7 +116,7 @@ angular.module('appRoute')
   //------------------Booking Details----------------------
   $scope.bookTheSeat =  function(bookingData){
     console.log(bookingData);
-
+      console.log("----------------"+bookingData.Floor.name);
     function parseDate(str) {
       var date = new Date(str),
       mnth = ("0" + (date.getMonth()+1)).slice(-2),
@@ -150,6 +150,7 @@ angular.module('appRoute')
 
         $scope.bookingOfZoneArray = [];
         $scope.seatNames = [];
+        var noSeatLeft = 0;
         for (var i = 0; i < response.length; i++) {
           var responseStartTime = response[i].StartTime.split(":");
           var responseStartTimeHour = parseInt(responseStartTime[0]);
@@ -157,101 +158,103 @@ angular.module('appRoute')
           var responseEndTime = response[i].EndTime.split(":");
           var responseEndTimeHour = responseEndTime[0];
           var responseEndTimeMinute = responseEndTime[1];
-          // var checkBooking = 0;
-          var checkRoomBookingSameUser = 0;
-          var checkRoomBookingDiffUser = 0;
           var checkZoneBookingSameUser = 0;
-          var checkZoneBookingDiffUser = 0;
+
                 if(response[i].BookingDate == $scope.bookingDetails.BookingDate &&  response[i].BookingOwner == $scope.bookingDetails.BookingOwner){
                   if(
                     (  (  ( userStartTimeHour == responseStartTimeHour && userStartTimeMinute >= responseStartTimeMinute) ||(userStartTimeHour > responseStartTimeHour)  ) &&  (  ( userStartTimeHour == responseEndTimeHour && userStartTimeMinute < responseEndTimeMinute) ||(userStartTimeHour < responseEndTimeHour)  ) ) ||
                     (  (  ( userEndTimeHour == responseStartTimeHour && userEndTimeMinute > responseStartTimeMinute) ||(userEndTimeHour > responseStartTimeHour)  )  &&   (  ( userEndTimeHour == responseEndTimeHour && userEndTimeMinute <= responseEndTimeMinute) ||(userEndTimeHour < responseEndTimeHour)  ) )||
-                    (  (  (  userStartTimeHour == responseStartTimeHour && userStartTimeMinute < responseStartTimeMinute) || userStartTimeHour < responseStartTimeHour )  &&    (  (userEndTimeHour == responseEndTimeHour && userEndTimeMinute > responseEndTimeMinute) || userEndTimeHour > responseEndTimeHour )  ) ){
+                    (  (  (  userStartTimeHour == responseStartTimeHour && userStartTimeMinute < responseStartTimeMinute) || userStartTimeHour < responseStartTimeHour )  &&    (  (userEndTimeHour == responseEndTimeHour && userEndTimeMinute > responseEndTimeMinute) || userEndTimeHour > responseEndTimeHour )  ) )
+                    {
                       checkZoneBookingSameUser = 1;
                       console.log("user already booked another room for this time slot"+response[i].StartTime+"  TO  "+response[i].EndTime);
                       break;
                     }
                   }
                   else if(response[i].BookingDate == $scope.bookingDetails.BookingDate &&  response[i].BookingOwner != $scope.bookingDetails.BookingOwner){
-                    if( (response[i].Location == $scope.bookingDetails.Location)&& (response[i].Floor == $scope.bookingDetails.Floor) ){
+
+                    if( (response[i].Location == $scope.bookingDetails.Location)&& (response[i].Floor == bookingData.Floor.name) ){
                       $scope.bookingOfZoneArray.push(response[i]);
+                      console.log("Seat number "+response[i].SeatNumber);
+                      $scope.seatNames.push(response[i].SeatNumber);
                     }
                   }
               }
               // else{
                 if(checkZoneBookingSameUser == 1){
-                  swal("Booking status!", "Sorry you have already booked the seat for this time slot", "error");
+                  swal("Booking status!", "Sorry you have already booked the seat for this time slot *****", "error");
                 }
                 else{
                   var seat = 0;
                   var userSeat = "";
                   var arr = $scope.seatNames;
                   var arrLast = arr[arr.length-1];
+                  var checkForSeat = 0;
                   //console.log("++++++++++++++++++++++++++"+userSeat);
                   $scope.seatNames = $scope.seatNames.sort();
-                  if($scope.bookingOfZoneArray.length == 0){
-                    for (var a = 0; a < 11 ; a++) {
-                      userSeat =  $scope.bookingDetails.Floor.charAt(0)+"A"+a;
+                  if($scope.seatNames.length == 0){
+                    userSeat = bookingData.Floor.name.charAt(0)+"A"+"01";
+                    console.log("booking for the first time");
+                  }
+                  else{
+                    console.log("Already booked and checking for next one");
+                      console.log("**************************"+ $scope.bookingOfZoneArray.length);
+                    for (var i = 0; i < $scope.bookingOfZoneArray.length; i++) {
+                        console.log("inside for loop------------------------------");
+                      var responseStartTime = $scope.bookingOfZoneArray[i].StartTime.split(":");
+                      var responseStartTimeHour = parseInt(responseStartTime[0]);
+                      var responseStartTimeMinute = parseInt(responseStartTime[1]);
+                      var responseEndTime = $scope.bookingOfZoneArray[i].EndTime.split(":");
+                      var responseEndTimeHour = responseEndTime[0];
+                      var responseEndTimeMinute = responseEndTime[1];
+                      if(
+                        (  (  ( userStartTimeHour == responseStartTimeHour && userStartTimeMinute >= responseStartTimeMinute) ||(userStartTimeHour > responseStartTimeHour)  ) &&  (  ( userStartTimeHour == responseEndTimeHour && userStartTimeMinute < responseEndTimeMinute) ||(userStartTimeHour < responseEndTimeHour)  ) ) ||
+                        (  (  ( userEndTimeHour == responseStartTimeHour && userEndTimeMinute > responseStartTimeMinute) ||(userEndTimeHour > responseStartTimeHour)  )  &&   (  ( userEndTimeHour == responseEndTimeHour && userEndTimeMinute <= responseEndTimeMinute) ||(userEndTimeHour < responseEndTimeHour)  ) )||
+                        (  (  (  userStartTimeHour == responseStartTimeHour && userStartTimeMinute < responseStartTimeMinute) || userStartTimeHour < responseStartTimeHour )  &&    (  (userEndTimeHour == responseEndTimeHour && userEndTimeMinute > responseEndTimeMinute) || userEndTimeHour > responseEndTimeHour )  ) ){
+                            checkForSeat = 1;
+                            console.log("clashing with time "+response[i].StartTime);
+
+                        }
+                        if(checkForSeat == 0){
+                            console.log("seat is available ");
+                            userSeat = $scope.bookingOfZoneArray[i].SeatNumber;
+                            break;
+                        }
+                    }
+                    if(userSeat == ""){
+                      var lastSeat = $scope.seatNames[$scope.seatNames.length-1] ;
+                      var s = parseInt(lastSeat.substring(2,4));
+                      if(lastSeat.charAt(1)== "J" && s == 10){
+                          noSeatLeft = 1;
+                      }
+                      else if( s == 10){
+                        var i = (parseInt(c, 36) + 1 ) % 36;
+                        userSeat = bookingData.Floor.name.charAt(0)+""+(!i * 10 + i).toString(36)+"01";
+                      }
+                      else{
+                        console.log("last Seat got is "+arrLast);
+                        console.log("last char is "+arrLast.substring(3,4));
+                        var lstNum  = parseInt(arrLast.substring(2,4));
+                        console.log("before incrementing lstNum : "+lstNum);
+                        lstNum = lstNum+1;
+                        console.log("after incrementing lstNum : "+lstNum);
+                        if(lstNum < 10){
+                              lstNum = "0"+lstNum;
+                              console.log("adding 0 digit to lstNum : "+lstNum);
+                        }
+                        userSeat = bookingData.Floor.name.charAt(0)+""+arrLast.charAt(1)+""+lstNum;
+                        console.log("generated SeatNumber : "+userSeat);
+                      }
                     }
                   }
-                  // console.log("++++++++++++++++++++++++++"+userSeat);
-                  // else {
-                  //   //-----logic for checking for availabilty of seat for the user's time selected
-                  //   var seatsArr = [];
-                  //   var arrayOfSingleSeat = [];
-                  //   for (var l = 0; l < 10 ; l++) {
-                  //     arr[l] = $scope.bookingDetails.Floor.charAt(0)+"B"+l;
-                  //   }
-                  //   console.log(arr);
-                  //   var checkForSeat = 0;
-                  //   for (var i = 0; i < 5; i++) {
-                  //     for (var j = 0; j < $scope.bookingOfZoneArray.length; j++) {
-                  //       console.log($scope.bookingOfZoneArray[j].SeatNumber);
-                  //       if(arr[i] ==  $scope.bookingOfZoneArray[j].SeatNumber){
-                  //         console.log("arr[i] is "+arr[i]);
-                  //         arrayOfSingleSeat.push($scope.bookingOfZoneArray[j]);
-                  //       }
-                  //     }
-                  //
-                  //     for (var k = 0; k < arrayOfSingleSeat.length; k++) {
-                  //       // checkForSeat = 0;
-                  //       console.log("user startTime "+$scope.bookingDetails.StartTime+"     user EndTime "+$scope.bookingDetails.EndTime+"        ");
-                  //       console.log("response StartTime "+arrayOfSingleSeat[k].StartTime+" response end Time "+arrayOfSingleSeat[k].EndTime+"   user seat "+arrayOfSingleSeat[k].SeatNumber);
-                  //       var responseStartTime = arrayOfSingleSeat[k].StartTime.split(":");
-                  //       var responseStartTimeHour = parseInt(responseStartTime[0]);
-                  //       var responseStartTimeMinute = parseInt(responseStartTime[1]);
-                  //       var responseEndTime = arrayOfSingleSeat[k].EndTime.split(":");
-                  //       var responseEndTimeHour = responseEndTime[0];
-                  //       var responseEndTimeMinute = responseEndTime[1];
-                  //
-                  //       if(  ( userStartTimeHour == responseStartTimeHour && userStartTimeMinute == responseStartTimeMinute)  || ( userEndTimeHour == responseEndTimeHour && userEndTimeMinute == responseEndTimeMinute) ||
-                  //       (  (  ( userStartTimeHour == responseStartTimeHour && userStartTimeMinute >= responseStartTimeMinute) ||(userStartTimeHour > responseStartTimeHour)  ) &&  (  ( userStartTimeHour == responseEndTimeHour && userStartTimeMinute < responseEndTimeMinute) ||(userStartTimeHour < responseEndTimeHour)  ) ) ||
-                  //       (  (  ( userEndTimeHour == responseStartTimeHour && userEndTimeMinute > responseStartTimeMinute) ||(userEndTimeHour > responseStartTimeHour)  )  &&   (  ( userEndTimeHour == responseEndTimeHour && userEndTimeMinute <= responseEndTimeMinute) ||(userEndTimeHour < responseEndTimeHour)  ) )||
-                  //       (  (  (  userStartTimeHour == responseStartTimeHour && userStartTimeMinute < responseStartTimeMinute) || userStartTimeHour < responseStartTimeHour )  &&    (  (userEndTimeHour == responseEndTimeHour && userEndTimeMinute > responseEndTimeMinute) || userEndTimeHour > responseEndTimeHour )  ) ){
-                  //         checkForSeat = 1;
-                  //         console.log("seat not available "+arrayOfSingleSeat[k]);
-                  //
-                  //       }
-                  //     }
-                  //     if(checkForSeat == 0){
-                  //       console.log("available seat is   "+arr[i]);
-                  //       userSeat = arr[i];
-                  //       break;
-                  //     }
-                  //     else{
-                  //       console.log("this seat is not available --- "+arr[i]);
-                  //       checkForSeat = 0;
-                  //       arrayOfSingleSeat = [];
-                  //     }
-                  //   }
-                  // }
-                  //-------------set the seat Number for this user---------------
-
-                  if(userSeat != ""){
+                  if(noSeatLeft == 1){
+                    swal("Booking status!", "Sorry !..All the parking slots are booked for this time slot.", "cancel");
+                  }
+                  else if(userSeat != ""){
                     //-----if seat is available-----------------
                     $scope.bookingDetails.SeatNumber = userSeat;
                     mainService.addBookingDetails($scope.bookingDetails).success(function(response){
-                      swal("Booking status!", "Successfully Booked Your Seat", "success");
+                      swal("Booking status!", "Successfully Booked Your Seat and your slot number is"+userSeat, "success");
                     })
                   }
                   else{
