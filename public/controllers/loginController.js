@@ -113,6 +113,7 @@ angular.module('appRoute')
 
     }
   })
+  
   //------------------Booking Details----------------------
   $scope.bookTheSeat =  function(bookingData){
     console.log(bookingData);
@@ -212,15 +213,20 @@ angular.module('appRoute')
                         (  (  ( userEndTimeHour == responseStartTimeHour && userEndTimeMinute > responseStartTimeMinute) ||(userEndTimeHour > responseStartTimeHour)  )  &&   (  ( userEndTimeHour == responseEndTimeHour && userEndTimeMinute <= responseEndTimeMinute) ||(userEndTimeHour < responseEndTimeHour)  ) )||
                         (  (  (  userStartTimeHour == responseStartTimeHour && userStartTimeMinute < responseStartTimeMinute) || userStartTimeHour < responseStartTimeHour )  &&    (  (userEndTimeHour == responseEndTimeHour && userEndTimeMinute > responseEndTimeMinute) || userEndTimeHour > responseEndTimeHour )  ) ){
                             checkForSeat = 1;
-                            console.log("clashing with time "+response[i].StartTime);
+                            console.log("CHECKING FOR SEAT NNUMBER : -------------"+$scope.bookingOfZoneArray[i].SeatNumber);
+                            console.log("userstarttime = "+(userStartTimeHour)+":"+userStartTimeMinute+"     responseStart  = "+responseStartTimeHour+":"+responseStartTimeMinute+" responseEnd"+responseEndTimeHour+":"+responseEndTimeMinute);
+                            console.log("userstarttime = "+(userStartTimeHour)+":"+userStartTimeMinute+"    responseStart  = "+responseStartTimeHour+":"+responseStartTimeMinute+" responseEnd"+responseEndTimeHour+":"+responseEndTimeMinute);
+
 
                         }
                         if(checkForSeat == 0){
-                            console.log("seat is available ");
+                            console.log("seat is available****************************** ");
                             userSeat = $scope.bookingOfZoneArray[i].SeatNumber;
                             break;
                         }
+                        checkForSeat = 0;
                     }
+
                     if(userSeat == ""){
                       var lastSeat = $scope.seatNames[$scope.seatNames.length-1] ;
                       var s = parseInt(lastSeat.substring(2,4));
@@ -228,8 +234,12 @@ angular.module('appRoute')
                           noSeatLeft = 1;
                       }
                       else if( s == 10){
-                        var i = (parseInt(c, 36) + 1 ) % 36;
-                        userSeat = bookingData.Floor.name.charAt(0)+""+(!i * 10 + i).toString(36)+"01";
+
+                        var incRow = lastSeat.charAt(1)+"";
+                        console.log("PRINTING THE CHARACTER OF ROW : "+incRow );
+                        incRow = String.fromCharCode(incRow.charCodeAt(0) + 1);
+                        console.log("PRINTING THE CHARACTER OF ROW CONVERTED : "+incRow);
+                        userSeat = bookingData.Floor.name.charAt(0)+""+incRow+"01";
                       }
                       else{
                         console.log("last Seat got is "+arrLast);
@@ -246,6 +256,7 @@ angular.module('appRoute')
                         console.log("generated SeatNumber : "+userSeat);
                       }
                     }
+                    checkForSeat = 0;
                   }
                   if(noSeatLeft == 1){
                     swal("Booking status!", "Sorry !..All the parking slots are booked for this time slot.", "cancel");
@@ -346,123 +357,3 @@ angular.module('appRoute')
                   }, 350);
                 };
               })
-
-        // $scope.Area = null;
-        // $scope.Areas = null;
-        // $scope.loadAreas = function() {
-        //   return $timeout(function() {
-        //     $scope.Areas =  $scope.Areas  || [
-        //       { id: 1, name: 'Fareham' },
-        //       { id: 2, name: 'Swindon' },
-        //       { id: 3, name: 'Cheltenham' }
-        //     ];
-        //   }, 350);
-        // };
-
-        // $scope.Tower = null;
-        // $scope.Towers = null;
-        // $scope.loadTowers = function() {
-        //   return $timeout(function() {
-        //     $scope.Towers =  $scope.Towers  || [
-        //       { id: 1, name: 'Tower A' },
-        //       { id: 2, name: 'Tower B' }
-        //     ];
-        //   }, 350);
-        // };
-
-
-
-        // $scope.Wing = null;
-        // $scope.Wings = null;
-        // $scope.loadWings = function() {
-        //   return $timeout(function() {
-        //     $scope.Wings =  $scope.Wings  || [
-        //       { id: 1, name: 'A Wing' },
-        //       { id: 2, name: 'B Wing' }
-        //     ];
-        //   }, 350);
-        // };
-        //
-        // $scope.Zone = null;
-        // $scope.Zones = null;
-        // $scope.loadZones = function() {
-        //   return $timeout(function() {
-        //     $scope.Zones =  $scope.Zones  || [
-        //       { id: 1, name: 'Sales' },
-        //       { id: 2, name: 'HR' },
-        //       { id: 3, name: 'Finance' },
-        //       { id: 4, name: 'Operations' },
-        //       { id: 5, name: 'Delivery' }
-        //     ];
-        //   }, 350);
-        // };
-
-        // $scope.RoomCapacity = null;
-        // $scope.RoomCapacitys = null;
-        // $scope.loadRmCapacitys = function() {
-        //   return $timeout(function() {
-        //     $scope.RoomCapacitys =  $scope.RoomCapacitys  || [
-        //       { id: 1, name: '4 - Seater' },
-        //       { id: 2, name: '8 - Seater' }
-        //     ];
-        //   }, 350);
-        // };
-
-        // $scope.wingSelect = function(Wing) {
-        //   console.log("Wing: "+Wing.name);
-        //   if(Wing.name == "A Wing"){
-        //     $scope.RoomSelect = function(capacity){
-        //       console.log(capacity.name);
-        //       if(capacity.name == "4 - Seater"){
-        //         $scope.Room = null;
-        //         $scope.Rooms = null;
-        //         $scope.loadRooms = function() {
-        //           return $timeout(function() {
-        //             $scope.Rooms =  $scope.Rooms  || [
-        //               { id: 1, name: 'Crane' },
-        //               { id: 2, name: 'Robin' }
-        //             ];
-        //           }, 350);
-        //         };
-        //       }
-        //       else{
-        //         $scope.loadRooms = function() {
-        //           return $timeout(function() {
-        //             $scope.Room = null;
-        //             $scope.Rooms = null;
-        //             $scope.Rooms =  $scope.Rooms  || [
-        //               { id: 1, name: 'Peacock' }
-        //             ];
-        //           }, 350);
-        //         };
-        //       }
-        //     }
-        //   }
-        //   else{
-        //     $scope.RoomSelect = function(capacity){
-        //       console.log(capacity.name);
-        //       if(capacity.name == "4 - Seater"){
-        //         $scope.Room = null;
-        //         $scope.Rooms = null;
-        //         $scope.loadRooms = function() {
-        //           return $timeout(function() {
-        //             $scope.Rooms =  $scope.Rooms  || [
-        //               { id: 1, name: 'Sparrow' }
-        //             ];
-        //           }, 350);
-        //         };
-        //       }
-        //       else{
-        //         $scope.Room = null;
-        //         $scope.Rooms = null;
-        //         $scope.loadRooms = function() {
-        //           return $timeout(function() {
-        //             $scope.Rooms =  $scope.Rooms  || [
-        //               { id: 1, name: 'Pigeon' }
-        //             ];
-        //           }, 350);
-        //         };
-        //       }
-        //     }
-        //   }
-        // };

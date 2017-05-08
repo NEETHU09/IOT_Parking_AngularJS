@@ -49,25 +49,26 @@ angular.module('appRoute')
     { id: 2, name: 'Swindon' },
     { id: 3, name: 'Cheltenham' }
   ];
-  $scope.loadTowers = function() {
+  $scope.loadFloors = function() {
     return $timeout(function() {
-      $scope.Towers =  $scope.Towers  || [
-        { id: 1, name: 'Tower A' },
-        { id: 2, name: 'Tower B' }
+      $scope.Floors =  $scope.Floors  || [
+        { id: 1, name: 'Ground Floor' },
+        { id: 2, name: '1st Floor' },
+        { id: 3, name: '2nd Floor' },
+        { id: 4, name: '3rd Floor' },
+
       ];
     }, 350);
   };
-  $scope.Floors =[
-    { id: 1, name: 'Ground Floor' },
-    { id: 2, name: '1st Floor' },
-    { id: 3, name: '2nd Floor' }
-  ];
-  $scope.fetchBookings = function(bookingType,Area,tower,floor_seater){
+  // $scope.Floors =[
+  //   { id: 1, name: 'Ground Floor' },
+  //   { id: 2, name: '1st Floor' },
+  //   { id: 3, name: '2nd Floor' }
+  // ];
+  $scope.fetchBookings = function(location,floor){
     $scope.showChartDiv = true;
-    console.log(bookingType);
-    console.log(Area);
-    console.log(tower);
-    console.log(floor_seater);
+    console.log(floor);
+    console.log(location);
     var date = new Date();
     var currHour = date.getHours();
     var currentMinute = date.getMinutes();
@@ -82,68 +83,40 @@ angular.module('appRoute')
     if(mon<10){   mon = "0"+mon;  }
 
     var currDate = year+"-"+mon+"-"+todayDate;
-    $scope.JsonDataDesk = [['Floor','Seats',{role:'style'}],
-    ['Sales',0,'color:#002e6d'],
-    ['HR',0,'color:#002e6d'],
-    ['Finance',0,'color:#002e6d'],
-    ['Operations',0,'color:#002e6d'],
-    ['Delivery',0,'color:#002e6d'],
+    $scope.JsonDataDesk = [['status','Seats',{role:'style'}],
+    ['booked',0,'color:#ADC20E'],
+    ['available',0,'color:#1B613A'],
+    ['occupied',0,'color:#C21F0E']
   ];
-  $scope.JsonDataRoom = [['Zones','Seats',{role:'style'}],
-  ['Ground Floor',0,'color:#002e6d'],
-  ['1st Floor',0,'color:#002e6d'],
-  ['2nd Floor',0,'color:#002e6d']
-];
 
-mainService.getAllTheBookings().success(function(response){
-  $scope.showChartDiv = true;
-  for(var i=0;i<response.length;i++){
-    var responseStartTime = response[i].StartTime.split(":");
-    var responseStartTimeHour = parseInt(responseStartTime[0]);
-    var responseStartTimeMinute = parseInt(responseStartTime[1]);
-    var responseEndTime = response[i].EndTime.split(":");
-    var responseEndTimeHour = responseEndTime[0];
-    var responseEndTimeMinute = responseEndTime[1];
+  mainService.getBookings(location,floor).success(function(response){
+    console.log(response);
+    for (var i = 0; i < response.length; i++) {
+      var responseStartTime = response[i].StartTime.split(":");
+      var responseStartTimeHour = parseInt(responseStartTime[0]);
+      var responseStartTimeMinute = parseInt(responseStartTime[1]);
+      var responseEndTime = response[i].EndTime.split(":");
+      var responseEndTimeHour = responseEndTime[0];
+      var responseEndTimeMinute = responseEndTime[1];
 
-    if(response[i].Area == Area && response[i].Tower == tower.name &&  response[i].BookingDate == currDate ){
       if(
         (  (  ( currHour == responseStartTimeHour && currentMinute >= responseStartTimeMinute) ||(currHour > responseStartTimeHour)  ) &&  (  ( currHour == responseEndTimeHour && currentMinute < responseEndTimeMinute) ||(currHour < responseEndTimeHour)  ) ) ||
         (  (  (  currHour == responseStartTimeHour && currentMinute < responseStartTimeMinute) || currHour < responseStartTimeHour )  &&    (  (currHour == responseEndTimeHour && currentMinute > responseEndTimeMinute) || currHour > responseEndTimeHour )  ) ){
-          if(response[i].BookingType == 'Room Booking' && response[i].TypeOfSeater == floor_seater ){
-            for(var j=1;j<$scope.JsonDataRoom.length-1;j++){
-              if($scope.JsonDataRoom[j][0] == response[i].Floor ){
-                $scope.JsonDataRoom[j][1] = $scope.JsonDataRoom[j][1]+1;
-              }
-            }
-          }
-          else if(response[i].BookingType == 'Desk Booking'  && response[i].Floor == floor_seater ){
-            for(var k=1;k<$scope.JsonDataDesk.length-1;k++){
-              if($scope.JsonDataDesk[k][0] == response[i].Zone ){
-                $scope.JsonDataDesk[k][1] = $scope.JsonDataDesk[k][1]+1;
-              }
-            }
-          }
+
+                $scope.JsonDataDesk[1][1] = $scope.JsonDataDesk[1][1]+1;
         }
-      }
     }
+    var availableSeats = 100 - $scope.JsonDataDesk[1][1];
+    $scope.JsonDataDesk[2][1] = availableSeats;
 
-    /*Bar Graph code starts*/
-
-    var deskBookingData = $scope.JsonDataDesk;
-    var roomBookingData = $scope.JsonDataRoom;
-    console.log( "Desk Bookings ----------------" );
-    console.log(deskBookingData);
-    console.log("Room Bookings ---------------");
-    console.log(roomBookingData);
     google.charts.load('current', {packages: ['corechart', 'bar']});
-    if(bookingType == "Desk Booking"){
       google.charts.setOnLoadCallback(drawBasic);
       function drawBasic() {
-        var data = google.visualization.arrayToDataTable(deskBookingData);
+        var data = google.visualization.arrayToDataTable(  $scope.JsonDataDesk);
 
         var options = {
           hAxis: {
-            title: 'Zones',
+            title: 'Parking',
             titleTextStyle: {
               fontSize: 12,
               bold: true
@@ -153,55 +126,27 @@ mainService.getAllTheBookings().success(function(response){
             gridlines: {
               count: 5
             },
-            title: 'Occupied Seats',
+            title: 'Total Parking Slots',
             titleTextStyle: {
               fontSize: 12,
               bold: true
             },
-            ticks: [0, 1, 2, 3, 4, 5]
+            ticks: [0,10, 20, 30, 40, 50, 60,70,80,90,100]
           },
           legend: { position: "none" }
         };
-        console.log("Area"+Area);
+        if(location == 'Electronic City'){
+          var divId = "chart_divDesk";
+        }
+        else{
+            var divId = "chart_divDesk"+location;
+        }
         var chart = new google.visualization.ColumnChart(
-          document.getElementById("chart_divDesk"+Area));
+          document.getElementById(divId));
 
           chart.draw(data,options);
         }
-      }
-      else{
-        // google.charts.load('current', {packages: ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawBasic);
-        function drawBasic() {
-          var data = google.visualization.arrayToDataTable(roomBookingData);
-          var options = {
-            hAxis: {
-              title: 'Floors',
-              titleTextStyle: {
-                fontSize: 12,
-                bold: true
-              }
-            },
-            vAxis: {
-              title: 'Occupied Rooms',
-              ticks: [0, 1, 2, 3],
-              titleTextStyle: {
-                fontSize: 12,
-                bold: true
-              }
-            },
-            legend: { position: "none" }
-          };
-          var chart = new google.visualization.ColumnChart(
-            document.getElementById("chart_divRoom"+Area));
-
-            chart.draw(data,options);
-          }
-        }
-        // $scope.disableSABtn = true;
-
-        /*Bar Graph code ends*/
-      })
+  })
     }
     $scope.ShowCards = function(bookingType){
       if(bookingType == "Desk Booking"){

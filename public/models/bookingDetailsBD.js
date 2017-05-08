@@ -7,7 +7,8 @@ var BookingDetailsSchema = new schema({
   BookingDate:String,
   StartTime:String,
   EndTime:String,
-  SeatNumber:String
+  SeatNumber:String,
+  BookingStatus:String
 });
 
 var bookingDetailsModel = mongoose.model('bookingDetails',BookingDetailsSchema,'bookingDetailsCollection');
@@ -23,6 +24,9 @@ booking.getAllBookingsDB = function(callback){
 booking.deleteReserve = function(data,callback) {
     console.log("object id is "+data);
     bookingDetailsModel.findOneAndRemove({'_id':data},callback);
+}
+booking.getBookingsDB = function(location,floor,callback){
+  bookingDetailsModel.find({'Location':location,'Floor':floor},callback);
 }
 
 module.exports =booking;

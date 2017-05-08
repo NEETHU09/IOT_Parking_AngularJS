@@ -439,7 +439,7 @@ md-select-value.md-select-placeholder {
 	height:210px;
 }
 
-#chart_divDesk{
+#chart_divDesk, #chart_divDeskSarjapur, #chart_divDeskKoramangala, #chart_divDeskWhitefield{
 	width:490px;
 	height:210px;
 }
@@ -793,7 +793,7 @@ md-select-value.md-select-placeholder {
 		margin-top:10px;
 	}
 
-	#chart_divDesk{
+	#chart_divDesk, #chart_divDeskSarjapur, #chart_divDeskKoramangala, #chart_divDeskWhitefield{
 		width:400px;
 		height:200px;
 		margin-top:10px;

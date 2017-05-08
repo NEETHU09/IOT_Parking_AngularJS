@@ -38,6 +38,10 @@ angular.module('appRoute')
     deleteSelected:function(data){
       var id = data._id;
     return $http.delete('http://localhost:3000/UserRoute/deleteTheBooking/'+id);
+  },
+  getBookings : function(location,floor){
+    console.log("printing location : "+location+" printing floor  : "+floor);
+    return $http.get('http://localhost:3000/UserRoute/getBookingsRoute/'+location+'/'+floor);
   }
   }
 })

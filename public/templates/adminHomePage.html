@@ -2,39 +2,20 @@
   <div layout="row" layout-align="center">
     <md-card class="adminMainBtnsCard">
       <div layout="row"  layout-align="center center">
-        <md-button type="submit" style="background-color: #002e6d;
-            border: none;
-            color: white;
-            padding: 6px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 12px;
-            opacity: {{btnOpacityDB}};
-            cursor: pointer;" ng-click="ShowCards('Desk Booking')">Desk Utilization
-        </md-button>
-        <md-button type="submit" style="background-color: #002e6d;
-          border: none;
-          color: white;
-          padding: 6px 32px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 12px;
-          opacity: {{btnOpacityRB}};
-          cursor: pointer;" ng-click="ShowCards('Room Booking')">Room Utilization
-        </md-button>
+        <h2 style="color:white;">Parking App</h2>
       </div>
     </md-card>
   </div>
+
   <div layout="row" layout-align="center">
     <md-card class="adminMainCard">
       <div layout="row" layout-sm="column" layout-xs="column" ng-show="dbkgShow">
-        <div flex="40">
+
+        <div flex="100">
           <md-card >
             <md-card-title>
               <md-card-title-text>
-                <div><h3 class="md-flex" >Desk Occupancy</h3></div>
+                <div><h3 class="md-flex" >Parking Status View</h3></div>
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
@@ -42,54 +23,44 @@
                 <md-content class="deskBookingCard" >
                     <md-tabs md-border-bottom md-autoselect md-stretch-tabs="tbar">
 
-                    <md-tab label="Fareham"md-on-select="hideChartDiv()" >
-                      <div layout="row" layout-align="center center">
-                        <img src="../images/tower.png"></img>
-                        <md-input-container>
-                          <md-select placeholder="Select Tower" ng-change="hideChartDiv()" ng-model="bTypeD1.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
-                            <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                      </div>
-                      <div style="padding: 25px; text-align: center;" ng-if="bTypeD1.Tower">
-                       <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
-                       <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
-                       <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Fareham',bTypeD1.Tower,'2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                    <md-tab label="Electronic City" md-on-select="hideChartDiv()" >
+                      <div style="padding: 25px; text-align: center;">
+                       <button class="floorBtn" ng-click="fetchBookings('Electronic City','Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Electronic City','1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Electronic City','2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Electronic City','3rd Floor')">3F&nbsp;<md-tooltip md-direction="bottom">3<sup>rd</sup> Floor</md-tooltip></button>
                      </div>
                     <center><div id="chart_divDesk" ng-if="showChartDiv" ><div id="chart_divDeskFareham" ></div></div></center>
+                    </md-tab>
 
-                    </md-tab>
-                    <md-tab label="Swindon" md-on-select="hideChartDiv()">
-                    <div layout="row" layout-align="center center">
-                      <img src="../images/tower.png"></img>
-                      <md-input-container>
-                        <md-select placeholder="Select Tower" ng-change="hideChartDiv()" ng-model="bTypeD2.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
-                          <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
-                        </md-select>
-                      </md-input-container>
-                    </div>
-                    <div style="padding: 25px; text-align: center;" ng-if="bTypeD2.Tower">
-                     <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
-                     <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
-                     <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Swindon',bTypeD2.Tower,'2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                    <md-tab label="Sarjapur">
+                      <div style="padding: 25px; text-align: center;">
+                       <button class="floorBtn" ng-click="fetchBookings('Sarjapur','Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Sarjapur','1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Sarjapur','2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Sarjapur','3rd Floor')">3F&nbsp;<md-tooltip md-direction="bottom">3<sup>rd</sup> Floor</md-tooltip></button>
+                     </div>
+                    <center><div id="chart_divDeskSarjapur" ng-if="showChartDiv" ><div id="chart_divDeskFareham" ></div></div></center>
+                  </md-tab>
+
+                  <md-tab label="Koramangala">
+                    <div style="padding: 25px; text-align: center;">
+                     <button class="floorBtn" ng-click="fetchBookings('Koramangala','Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                     <button  class="floorBtn" ng-click="fetchBookings('Koramangala','1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                     <button  class="floorBtn" ng-click="fetchBookings('Koramangala','2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                     <button  class="floorBtn" ng-click="fetchBookings('Koramangala','3rd Floor')">3F&nbsp;<md-tooltip md-direction="bottom">3<sup>rd</sup> Floor</md-tooltip></button>
                    </div>
-                    <center><div id="chart_divDesk" ng-if="showChartDiv"><div id="chart_divDeskSwindon"></div></div></center>
-                    </md-tab>
-                    <md-tab label="Cheltenham" md-on-select="hideChartDiv()">
-                    <div layout="row" layout-align="center center">
-                    <img src="../images/tower.png"></img>
-                    <md-input-container>
-                      <md-select placeholder="Select Tower" ng-change="hideChartDiv()" ng-model="bTypeD3.Tower" md-on-open="loadTowers()" style="min-width: 200px;">
-                        <md-option ng-value="Tower" ng-repeat="Tower in Towers">{{Tower.name}}</md-option>
-                      </md-select>
-                    </md-input-container>
-                    </div>
-                    <div style="padding: 25px; text-align: center;" ng-if="bTypeD3.Tower">
-                     <button class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
-                     <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
-                     <button  class="floorBtn" ng-click="fetchBookings('Desk Booking','Cheltenham',bTypeD3.Tower,'2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
-                   </div>
-                    <center><div id="chart_divDesk" ng-if="showChartDiv"><div id="chart_divDeskCheltenham"></div></div></center>
+                  <center><div id="chart_divDeskKoramangala" ng-if="showChartDiv" ><div id="chart_divDeskFareham" ></div></div></center>
+                  </md-tab>
+
+                    <md-tab label="Whitefield">
+                      <div style="padding: 25px; text-align: center;">
+                       <button class="floorBtn" ng-click="fetchBookings('Whitefield','Ground Floor')">GF<md-tooltip md-direction="bottom">Ground Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Whitefield','1st Floor')">&nbsp;1F<md-tooltip md-direction="bottom">1<sup>st</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Whitefield','2nd Floor')">2F&nbsp;<md-tooltip md-direction="bottom">2<sup>nd</sup> Floor</md-tooltip></button>
+                       <button  class="floorBtn" ng-click="fetchBookings('Whitefield','3rd Floor')">3F&nbsp;<md-tooltip md-direction="bottom">3<sup>rd</sup> Floor</md-tooltip></button>
+                     </div>
+                    <center><div id="chart_divDeskWhitefield" ng-if="showChartDiv" ><div id="chart_divDeskFareham" ></div></div></center>
                     </md-tab>
                   </md-tabs>
 
@@ -99,7 +70,7 @@
           </md-card>
         </div>
 
-        <div flex="60">
+        <!-- <div flex="60">
           <md-card ng-init="ShowAnalytics('Desk Booking','Daily')">
             <md-card-title>
               <md-card-title-text>
@@ -121,9 +92,9 @@
               </div>
             </md-card-content>
           </md-card>
-        </div>
+        </div> -->
       </div>
-
+<!--
       <div layout="row" layout-sm="column" layout-xs="column" ng-show="rbkgShow">
         <div flex="40">
           <md-card >
@@ -211,7 +182,7 @@
             </md-card-content>
           </md-card>
         </div>
-      </div>
+      </div> -->
 
     </md-card>
     </div>
