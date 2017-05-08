@@ -9,7 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var UserRoute = require('./routes/userRouter');
 var bookingRoute = require('./routes/bookingRouter')
-mongoose.connect('mongodb://localhost/iotdb');
+mongoose.connect('mongodb://localhost/parkingAppDB');
 var app = express();
 
 // view engine setup

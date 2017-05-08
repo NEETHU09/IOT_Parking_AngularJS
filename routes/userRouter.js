@@ -53,6 +53,20 @@ router.route('/getAllBookings')
   })
 })
 
+router.route('/getBookingsRoute/:location/:floor')
+.get(function(req,res){
+  var location = req.params.location;
+  var floor = req.params.floor;
+  console.log("location : "+location+"     floor  : "+floor);
+  bookingDB.getBookingsDB(location,floor,function(err,result){
+    if(err){
+      res.send("sorry error found");
+    }
+    else{
+      res.json(result);
+    }
+  })
+})
 
 router.route('/deleteTheBooking/:id')
 .delete(function(req,res){
